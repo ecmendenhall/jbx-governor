@@ -1938,6 +1938,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@jbx-protocol/contracts-v2@npm:^8.0.1":
+  version: 8.0.1
+  resolution: "@jbx-protocol/contracts-v2@npm:8.0.1"
+  checksum: 3e66f2f7bbf633dc81f038ee3ba618245a08a728c1c5d1727d47f354006253c436386aecd37bd15094f086b51b5ea6bad1877670eb9aacc2b6437c5e03ff9168
+  languageName: node
+  linkType: hard
+
 "@jridgewell/gen-mapping@npm:^0.1.0":
   version: 0.1.1
   resolution: "@jridgewell/gen-mapping@npm:0.1.1"
@@ -2625,6 +2632,7 @@ __metadata:
     "@ethersproject/providers": ^5.6.8
     "@ethersproject/solidity": ^5.6.1
     "@ethersproject/units": ^5.6.1
+    "@jbx-protocol/contracts-v2": ^8.0.1
     "@nomiclabs/hardhat-ethers": "npm:hardhat-deploy-ethers@^0.3.0-beta.10"
     "@nomiclabs/hardhat-solhint": ^2.0.1
     "@nomiclabs/hardhat-waffle": ^2.0.3
