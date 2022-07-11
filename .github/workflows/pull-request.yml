@@ -39,6 +39,10 @@ jobs:
       - name: 'Check hardhat compile'
         run: |
           yarn w:hardhat compile --force
+      - name: Install Foundry
+        uses: foundry-rs/foundry-toolchain@v1
+        with:
+          version: nightly
 
       - name: 'Build contracts'
         run: |
@@ -51,7 +55,7 @@ jobs:
 
       - name: 'Build vite production'
         run: |
-          yarn run start:vite optimize --force 
+          yarn run start:vite optimize --force
           yarn cross-env NODE_OPTIONS=--max_old_space_size=4096 yarn build:vite
 
       - name: 'Build nextjs production'
@@ -60,6 +64,11 @@ jobs:
 
       - name: 'Run tests'
         run: yarn test
+      - name: 'Run forge tests'
+        run: cd packages/hardhat-ts && forge test -vvv --fork-url $RPC_URL
+        with:
+          env:
+            RPC_URL: ${{secrets.RPC_URL}}
 
       - name: Publish unit test results
         uses: EnricoMi/publish-unit-test-result-action@v1

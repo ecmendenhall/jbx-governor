@@ -1,16 +1,15 @@
 // This adds support for typescript paths mappings
 import 'tsconfig-paths/register';
-
 import './helpers/hardhat-imports';
 
-import path from 'path';
-
-import { hardhatNamedAccounts } from '@scaffold-eth/common/src/constants';
-import { getNetworks } from '@scaffold-eth/common/src/functions';
 import { config as envConfig } from 'dotenv';
 import glob from 'glob';
 import { removeConsoleLog } from 'hardhat-preprocessor';
 import { HardhatUserConfig } from 'hardhat/config';
+import path from 'path';
+
+import { hardhatNamedAccounts } from '@scaffold-eth/common/src/constants';
+import { getNetworks } from '@scaffold-eth/common/src/functions';
 
 import { getMnemonic } from './tasks/functions/mnemonic';
 
@@ -78,7 +77,7 @@ export const config: HardhatUserConfig = {
   solidity: {
     compilers: [
       {
-        version: '0.8.10',
+        version: '0.8.6',
         settings: {
           optimizer: {
             enabled: true,
