@@ -22,8 +22,10 @@ import { IJBFundingCycleBallot } from "@jbx-protocol/contracts-v2/contracts/inte
 import { JBGovernor } from "../../contracts/JBGovernor.sol";
 import { JBGovernorFactory } from "../../contracts/JBGovernorFactory.sol";
 import { JBGovernorParams } from "../../contracts/JBGovernor.sol";
+import { JBTestProjectFactory } from "../../contracts/JBTestProjectFactory.sol";
 
 contract JBGovernorFactoryForkTest is Test, ERC721Holder {
+  JBTestProjectFactory testFactory;
   JBGovernorFactory factory;
   IJBController controller;
   IJBProjects projects;
@@ -32,59 +34,19 @@ contract JBGovernorFactoryForkTest is Test, ERC721Holder {
   uint256 projectId;
 
   function setUp() public {
-    projects = IJBProjects(0xD8B4359143eda5B2d763E127Ed27c77addBc47d3);
-    tokenStore = IJBTokenStore(0xCBB8e16d998161AdB20465830107ca298995f371);
-    controller = IJBController(0x4e3ef8AFCC2B52E4e704f4c8d9B7E7948F651351);
+    projects = IJBProjects(0x2d8e361f8F1B5daF33fDb2C99971b33503E60EEE);
+    tokenStore = IJBTokenStore(0x220468762c6cE4C05E8fda5cc68Ffaf0CC0B2A85);
+    controller = IJBController(0xd96ecf0E07eB197587Ad4A897933f78A00B21c9a);
+    testFactory = new JBTestProjectFactory(controller, projects, tokenStore);
     factory = new JBGovernorFactory(controller, projects, tokenStore);
-
-    JBProjectMetadata memory projectMetadata = JBProjectMetadata("content", 1);
-    JBFundingCycleData memory fundingCycleData = JBFundingCycleData(0, 0, 0, IJBFundingCycleBallot(address(0)));
-    JBGlobalFundingCycleMetadata memory globalFundingCycleMetadata = JBGlobalFundingCycleMetadata(false, false);
-    JBFundingCycleMetadata memory fundingCycleMetadata = JBFundingCycleMetadata(
-      globalFundingCycleMetadata,
-      0,
-      0,
-      0,
-      false,
-      false,
-      false,
-      false,
-      true,
-      true,
-      true,
-      true,
-      false,
-      true,
-      false,
-      false,
-      address(0)
-    );
-    JBGroupedSplits[] memory groupedSplits = new JBGroupedSplits[](0);
-    JBFundAccessConstraints[] memory fundAccessConstraints = new JBFundAccessConstraints[](0);
-    IJBPaymentTerminal[] memory terminals = new IJBPaymentTerminal[](0);
-
-    projectId = controller.launchProjectFor(
-      address(this),
-      projectMetadata,
-      fundingCycleData,
-      fundingCycleMetadata,
-      block.timestamp,
-      groupedSplits,
-      fundAccessConstraints,
-      terminals,
-      "memo"
-    );
-    projectToken = controller.issueTokenFor(projectId, "Test Project", "TEST");
-  }
-
-  function testCreatesProject() public {
-    assertEq(projects.balanceOf(address(this)), 1);
-    assertEq(projects.ownerOf(projectId), address(this));
   }
 
   function testDeployGovernor() public {
+    (projectId, projectToken) = testFactory.deployTestProject("Test Project", "TEST");
+
     projects.approve(address(factory), projectId);
     (address newToken, address governorAddr, address timelockAddr) = factory.deploy(projectId, 1, 42069, 0, 4);
+    vm.stopPrank();
 
     IERC20Metadata token = IERC20Metadata(newToken);
     JBGovernor governor = JBGovernor(payable(governorAddr));

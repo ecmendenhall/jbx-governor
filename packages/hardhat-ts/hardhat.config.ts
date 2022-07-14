@@ -58,6 +58,12 @@ const networks = {
     //   mnemonic: getMnemonic(),
     // },
   },
+  rinkeby: {
+    url: process.env.RPC_URL ?? '',
+    accounts: {
+      mnemonic: getMnemonic(),
+    },
+  },
 };
 
 /**

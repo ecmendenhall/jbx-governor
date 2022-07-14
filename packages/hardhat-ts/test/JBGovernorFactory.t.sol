@@ -30,24 +30,21 @@ contract JBGovernorFactoryTest is Test {
 
   function testDeploysToken() public {
     projects.approve(address(factory), 1);
-    JBGovernorParams memory params = JBGovernorParams(1, 42069, 0, 4);
-    (address token, , ) = factory.deploy(1, params);
+    (address token, , ) = factory.deploy(1, 1, 42069, 0, 4);
 
     assertFalse(token == address(0));
   }
 
   function testDeploysGovernor() public {
     projects.approve(address(factory), 1);
-    JBGovernorParams memory params = JBGovernorParams(1, 42069, 0, 4);
-    (, address governor, ) = factory.deploy(1, params);
+    (, address governor, ) = factory.deploy(1, 1, 42069, 0, 4);
 
     assertFalse(governor == address(0));
   }
 
   function testDeploysTimelock() public {
     projects.approve(address(factory), 1);
-    JBGovernorParams memory params = JBGovernorParams(1, 42069, 0, 4);
-    (, , address timelock) = factory.deploy(1, params);
+    (, , address timelock) = factory.deploy(1, 1, 42069, 0, 4);
 
     assertFalse(timelock == address(0));
   }
@@ -56,16 +53,14 @@ contract JBGovernorFactoryTest is Test {
     assertEq(projects.ownerOf(1), address(this));
 
     projects.approve(address(factory), 1);
-    JBGovernorParams memory params = JBGovernorParams(1, 42069, 0, 4);
-    (, , address timelock) = factory.deploy(1, params);
+    (, , address timelock) = factory.deploy(1, 1, 42069, 0, 4);
 
     assertEq(projects.ownerOf(1), timelock);
   }
 
   function testSetsName() public {
     projects.approve(address(factory), 1);
-    JBGovernorParams memory params = JBGovernorParams(1, 42069, 0, 4);
-    (, address governorAddr, ) = factory.deploy(1, params);
+    (, address governorAddr, ) = factory.deploy(1, 1, 42069, 0, 4);
     JBGovernor governor = JBGovernor(payable(governorAddr));
 
     assertEq(governor.name(), "vPROJ Governor");
@@ -73,8 +68,7 @@ contract JBGovernorFactoryTest is Test {
 
   function testSetsVotingDelay() public {
     projects.approve(address(factory), 1);
-    JBGovernorParams memory params = JBGovernorParams(69, 42069, 0, 4);
-    (, address governorAddr, ) = factory.deploy(1, params);
+    (, address governorAddr, ) = factory.deploy(1, 69, 42069, 0, 4);
     JBGovernor governor = JBGovernor(payable(governorAddr));
 
     assertEq(governor.votingDelay(), 69);
@@ -82,8 +76,7 @@ contract JBGovernorFactoryTest is Test {
 
   function testSetsVotingPeriod() public {
     projects.approve(address(factory), 1);
-    JBGovernorParams memory params = JBGovernorParams(1, 69420, 0, 4);
-    (, address governorAddr, ) = factory.deploy(1, params);
+    (, address governorAddr, ) = factory.deploy(1, 1, 69420, 0, 4);
     JBGovernor governor = JBGovernor(payable(governorAddr));
 
     assertEq(governor.votingPeriod(), 69420);
@@ -91,8 +84,7 @@ contract JBGovernorFactoryTest is Test {
 
   function testSetsProposalThreshold() public {
     projects.approve(address(factory), 1);
-    JBGovernorParams memory params = JBGovernorParams(1, 42069, 10, 4);
-    (, address governorAddr, ) = factory.deploy(1, params);
+    (, address governorAddr, ) = factory.deploy(1, 1, 42069, 10, 4);
     JBGovernor governor = JBGovernor(payable(governorAddr));
 
     assertEq(governor.proposalThreshold(), 10);
@@ -100,8 +92,7 @@ contract JBGovernorFactoryTest is Test {
 
   function testSetsQuorum() public {
     projects.approve(address(factory), 1);
-    JBGovernorParams memory params = JBGovernorParams(1, 42069, 0, 42);
-    (, address governorAddr, ) = factory.deploy(1, params);
+    (, address governorAddr, ) = factory.deploy(1, 1, 42069, 0, 42);
     JBGovernor governor = JBGovernor(payable(governorAddr));
 
     assertEq(governor.quorumNumerator(), 42);
@@ -109,8 +100,7 @@ contract JBGovernorFactoryTest is Test {
 
   function testSetsToken() public {
     projects.approve(address(factory), 1);
-    JBGovernorParams memory params = JBGovernorParams(1, 42069, 0, 4);
-    (address token, address governorAddr, ) = factory.deploy(1, params);
+    (address token, address governorAddr, ) = factory.deploy(1, 1, 42069, 0, 4);
     JBGovernor governor = JBGovernor(payable(governorAddr));
 
     assertEq(address(governor.token()), token);
@@ -118,8 +108,7 @@ contract JBGovernorFactoryTest is Test {
 
   function testSetsTimelock() public {
     projects.approve(address(factory), 1);
-    JBGovernorParams memory params = JBGovernorParams(1, 42069, 0, 4);
-    (, address governorAddr, address timelock) = factory.deploy(1, params);
+    (, address governorAddr, address timelock) = factory.deploy(1, 1, 42069, 0, 4);
     JBGovernor governor = JBGovernor(payable(governorAddr));
 
     assertEq(address(governor.timelock()), timelock);
@@ -127,8 +116,7 @@ contract JBGovernorFactoryTest is Test {
 
   function testSetsTokenName() public {
     projects.approve(address(factory), 1);
-    JBGovernorParams memory params = JBGovernorParams(1, 42069, 0, 4);
-    (address tokenAddr, , ) = factory.deploy(1, params);
+    (address tokenAddr, , ) = factory.deploy(1, 1, 42069, 0, 4);
     JBVotesToken token = JBVotesToken(tokenAddr);
 
     assertEq(token.name(), "Project Token Governance");
@@ -136,8 +124,7 @@ contract JBGovernorFactoryTest is Test {
 
   function testSetsTokenSymbol() public {
     projects.approve(address(factory), 1);
-    JBGovernorParams memory params = JBGovernorParams(1, 42069, 0, 4);
-    (address tokenAddr, , ) = factory.deploy(1, params);
+    (address tokenAddr, , ) = factory.deploy(1, 1, 42069, 0, 4);
     JBVotesToken token = JBVotesToken(tokenAddr);
 
     assertEq(token.symbol(), "vPROJ");
@@ -145,8 +132,7 @@ contract JBGovernorFactoryTest is Test {
 
   function testCallsChangeTokenOfOnController() public {
     projects.approve(address(factory), 1);
-    JBGovernorParams memory params = JBGovernorParams(1, 42069, 0, 4);
-    (address token, , ) = factory.deploy(1, params);
+    (address token, , ) = factory.deploy(1, 1, 42069, 0, 4);
 
     ChangeTokenOfCallArgs memory callArgs = controller.getChangeTokenOfCalledWith();
 

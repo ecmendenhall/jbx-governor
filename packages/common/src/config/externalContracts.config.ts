@@ -16,6 +16,9 @@ export const externalContractsAddressMap: TExternalContractsAddressMap = {
   [NetworkID.MAINNET]: {
     DAI: '0x6b175474e89094c44da98b954eedeac495271d0f',
   },
+  [NetworkID.RINKEBY]: {
+    JBProjects: '0x2d8e361f8f1b5daf33fdb2c99971b33503e60eee',
+  },
   // [NetworkID.POLYGON]: {
   //   DAI: '0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063',
   // },

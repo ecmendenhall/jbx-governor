@@ -26,13 +26,17 @@ export const appContractsConfig = () => {
       // --------------------------------------------------
       // 🙋🏽‍♂️ Add your hadrdhat contracts here
       // --------------------------------------------------
-      YourContract: createConnectorForHardhatContract(
-        'YourContract',
-        hardhatContracts.YourContract__factory,
+      JBGovernorFactory: createConnectorForHardhatContract(
+        'JBGovernorFactory',
+        hardhatContracts.JBGovernorFactory__factory,
         hardhatContractsJson
       ),
 
-      YourNFT: createConnectorForHardhatContract('YourNFT', hardhatContracts.YourNFT__factory, hardhatContractsJson),
+      JBTestProjectFactory: createConnectorForHardhatContract(
+        'JBTestProjectFactory',
+        hardhatContracts.JBTestProjectFactory__factory,
+        hardhatContractsJson
+      ),
 
       // --------------------------------------------------
       // 🙋🏽‍♂️ Add your external contracts here, make sure to define the address in `externalContractsConfig.ts`Í
